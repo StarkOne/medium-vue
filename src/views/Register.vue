@@ -19,7 +19,7 @@
                         <fieldset class="form-group">
                             <input type="password" class="form-control form-control-lg" placeholder="Password" />
                         </fieldset>
-                        <button class="btn btn-lg btn-primary pull-xs-right">Sign Up</button>
+                        <button :disabled="isSubmitting" class="btn btn-lg btn-primary pull-xs-right">Sign Up</button>
                     </form>
                 </div>
             </div>
@@ -30,9 +30,23 @@
 <script>
 export default {
     name: 'McvRegister',
+    computed: {
+        isSubmitting() {
+            return this.$store.state.auth.isSubmitting;
+        },
+    },
     methods: {
         onSubmit() {
-            console.log('onSubmit');
+            this.$store
+                .dispatch('register', {
+                    email: 'asdjapisd1jasidj@gasd.ru',
+                    username: 'asxzczx1cdassadasdsadsadsadd',
+                    password: 'zxcxzczcxxc',
+                })
+                .then((user) => {
+                    console.log('user');
+                    console.log(user);
+                });
         },
     },
 };
