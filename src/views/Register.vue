@@ -11,13 +11,28 @@
 
                     <form @submit.prevent="onSubmit">
                         <fieldset class="form-group">
-                            <input type="text" class="form-control form-control-lg" placeholder="Username" />
+                            <input
+                                v-model="email"
+                                type="text"
+                                class="form-control form-control-lg"
+                                placeholder="Username"
+                            />
                         </fieldset>
                         <fieldset class="form-group">
-                            <input type="text" class="form-control form-control-lg" placeholder="Email" />
+                            <input
+                                v-model="username"
+                                type="text"
+                                class="form-control form-control-lg"
+                                placeholder="Email"
+                            />
                         </fieldset>
                         <fieldset class="form-group">
-                            <input type="password" class="form-control form-control-lg" placeholder="Password" />
+                            <input
+                                v-model="password"
+                                type="password"
+                                class="form-control form-control-lg"
+                                placeholder="Password"
+                            />
                         </fieldset>
                         <button :disabled="isSubmitting" class="btn btn-lg btn-primary pull-xs-right">Sign Up</button>
                     </form>
@@ -30,6 +45,13 @@
 <script>
 export default {
     name: 'McvRegister',
+    data() {
+        return {
+            email: '',
+            username: '',
+            password: '',
+        };
+    },
     computed: {
         isSubmitting() {
             return this.$store.state.auth.isSubmitting;
@@ -39,13 +61,14 @@ export default {
         onSubmit() {
             this.$store
                 .dispatch('register', {
-                    email: 'asdjapisd1jasidj@gasd.ru',
-                    username: 'asxzczx1cdassadasdsadsadsadd',
-                    password: 'zxcxzczcxxc',
+                    email: this.email,
+                    username: this.username,
+                    password: this.password,
                 })
-                .then((user) => {
-                    console.log('user');
-                    console.log(user);
+                .then(() => {
+                    this.$router.push({
+                        name: 'home',
+                    });
                 });
         },
     },
