@@ -1,7 +1,3 @@
 <template>
-    <div>
-        <h1>hello</h1>
-
-        <router-view />
-    </div>
+    <div><router-view /></div>
 </template>
