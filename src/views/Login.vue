@@ -35,10 +35,10 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapGetters } from 'vuex';
 
 import McvValidationErrors from '@/components/ValidationErrors.vue';
-import { actionTypes } from '@/store/modules/auth';
+import { actionTypes, getterTypes } from '@/store/modules/auth';
 
 export default {
     name: 'McvLogin',
@@ -52,9 +52,9 @@ export default {
         };
     },
     computed: {
-        ...mapState({
-            isSubmitting: (state) => state.auth.isSubmitting,
-            validationErrors: (state) => state.auth.validationErrors,
+        ...mapGetters({
+            isSubmitting: getterTypes.isSubmitting,
+            validationErrors: getterTypes.validationErrors,
         }),
     },
     methods: {

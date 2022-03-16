@@ -84,8 +84,35 @@ const actions = {
     },
 };
 
+export const getterTypes = {
+    currentUser: '[auth] currentUser',
+    isLoggedIn: '[auth] isLoggedIn',
+    isAnonymous: '[auth] isAnonymous',
+    isSubmitting: '[auth] isSubmitting',
+    validationErrors: '[auth] validationErrors',
+};
+
+const getters = {
+    [getterTypes.currentUser]: (state) => {
+        return state.currentUser;
+    },
+    [getterTypes.isLoggedIn]: (state) => {
+        return Boolean(state.isLoggedIn);
+    },
+    [getterTypes.isAnonymous]: (state) => {
+        return state.isLoggedIn === false;
+    },
+    [getterTypes.isSubmitting]: (state) => {
+        return state.isSubmitting;
+    },
+    [getterTypes.validationErrors]: (state) => {
+        return state.validationErrors;
+    },
+};
+
 export default {
     state,
     mutations,
     actions,
+    getters,
 };
