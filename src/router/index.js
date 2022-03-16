@@ -19,6 +19,21 @@ const routes = [
         name: 'login',
         component: Login,
     },
+    {
+        path: '/login',
+        name: 'settings',
+        component: Login,
+    },
+    {
+        path: '/login',
+        name: 'createArticle',
+        component: Login,
+    },
+    {
+        path: '/userProfile/:slug',
+        name: 'userProfile',
+        component: Login,
+    },
 ];
 
 const router = createRouter({
