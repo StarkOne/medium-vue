@@ -3,6 +3,7 @@ import { setItem } from '@/helpers/persostanceStorage';
 
 const state = {
     isSubmitting: false,
+    isLoading: false,
     currentUser: null,
     validationErrors: null,
     isLoggedIn: null,
@@ -12,9 +13,14 @@ export const mutationTypes = {
     registerStart: '[auth] registerStart',
     registerSuccess: '[auth] registerSuccess',
     registerFailure: '[auth] registerFailure',
+
     loginStart: '[auth] loginStart',
     loginSuccess: '[auth] loginSuccess',
     loginFailure: '[auth] loginFailure',
+
+    getCurrentUserStart: '[auth] getCurrentUserStart',
+    getCurrentUserSuccess: '[auth] getCurrentUserSuccess',
+    getCurrentUserFailure: '[auth] getCurrentUserFailure',
 };
 
 const mutations = {
@@ -31,6 +37,7 @@ const mutations = {
         state.isSubmitting = false;
         state.validationErrors = payload;
     },
+
     [mutationTypes.loginStart](state) {
         state.isSubmitting = true;
         state.validationErrors = null;
@@ -44,11 +51,26 @@ const mutations = {
         state.isSubmitting = false;
         state.validationErrors = payload;
     },
+
+    [mutationTypes.getCurrentUserStart](state) {
+        state.isLoading = true;
+    },
+    [mutationTypes.getCurrentUserSuccess](state, payload) {
+        state.isLoading = false;
+        state.currentUser = payload;
+        state.isLoggedIn = true;
+    },
+    [mutationTypes.getCurrentUserFailure](state) {
+        state.isLoading = false;
+        state.isLoggedIn = false;
+        state.currentUser = null;
+    },
 };
 
 export const actionTypes = {
     register: '[auth] register',
     login: '[auth] login',
+    getCurrentUser: '[auth] getCurrentUser',
 };
 
 const actions = {
@@ -67,6 +89,7 @@ const actions = {
                 });
         });
     },
+
     [actionTypes.login](context, credentials) {
         return new Promise((resolve) => {
             context.commit(mutationTypes.loginStart);
@@ -82,10 +105,26 @@ const actions = {
                 });
         });
     },
+
+    [actionTypes.getCurrentUser](context) {
+        return new Promise((resolve) => {
+            context.commit(mutationTypes.getCurrentUserStart);
+            authApi
+                .getCurrentUser()
+                .then((response) => {
+                    context.commit(mutationTypes.getCurrentUserSuccess, response.data.user);
+                    resolve(response.data.user);
+                })
+                .catch(() => {
+                    context.commit(mutationTypes.getCurrentUserFailure);
+                });
+        });
+    },
 };
 
 export const getterTypes = {
     currentUser: '[auth] currentUser',
+    isLoading: '[auth] isLoading',
     isLoggedIn: '[auth] isLoggedIn',
     isAnonymous: '[auth] isAnonymous',
     isSubmitting: '[auth] isSubmitting',
@@ -95,6 +134,9 @@ export const getterTypes = {
 const getters = {
     [getterTypes.currentUser]: (state) => {
         return state.currentUser;
+    },
+    [getterTypes.isLoading]: (state) => {
+        return Boolean(state.isLoading);
     },
     [getterTypes.isLoggedIn]: (state) => {
         return Boolean(state.isLoggedIn);
