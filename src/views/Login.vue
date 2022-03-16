@@ -15,6 +15,7 @@
                                 type="text"
                                 class="form-control form-control-lg"
                                 placeholder="Email"
+                                :disabled="isSubmitting"
                             />
                         </fieldset>
                         <fieldset class="form-group">
@@ -24,6 +25,7 @@
                                 autocomplete="on"
                                 class="form-control form-control-lg"
                                 placeholder="Password"
+                                :disabled="isSubmitting"
                             />
                         </fieldset>
                         <button :disabled="isSubmitting" class="btn btn-lg btn-primary pull-xs-right">Sign In</button>
@@ -66,7 +68,7 @@ export default {
                 })
                 .then(() => {
                     this.$router.push({
-                        name: 'home',
+                        name: 'globalFeed',
                     });
                 });
         },
