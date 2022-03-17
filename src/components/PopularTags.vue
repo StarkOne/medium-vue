@@ -1,7 +1,7 @@
 <template>
     <div class="sidebar">
-        <div v-if="isLoading" class="">Loading tags...</div>
-        <div v-if="error" class="">Something bad happened</div>
+        <mcv-loading v-if="isLoading" />
+        <mcv-error v-if="error" />
 
         <div v-if="popularTags && popularTags.length">
             <p>Popular Tags</p>
@@ -21,12 +21,18 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import McvLoading from '@/components/Loading.vue';
+import McvError from '@/components/Error.vue';
 
 import { actionTypes } from '@/store/modules/popularTags';
 import { getterTypes } from '@/store/modules/popularTags';
 
 export default {
     name: 'McvPopularTags',
+    components: {
+        McvLoading,
+        McvError,
+    },
     computed: {
         ...mapGetters({
             popularTags: getterTypes.data,
