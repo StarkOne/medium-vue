@@ -28,15 +28,17 @@
                 </router-link>
             </div>
 
-            <mcv-pagination :total="total" :limit="limit" :currect-page="currectPage" :url="url" />
+            <mcv-pagination :total="feed.articlesCount" :limit="limit" :currect-page="currectPage" :url="baseUrl" />
         </div>
     </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
+import { stringify, parseUrl } from 'query-string';
 import { actionTypes, getterTypes } from '@/store/modules/feed';
 import McvPagination from '@/components/Pagination';
+import { limit } from '@/helpers/vars';
 
 export default {
     name: 'McvFeed',
@@ -51,10 +53,7 @@ export default {
     },
     data() {
         return {
-            total: 500,
-            limit: 10,
-            currectPage: 5,
-            url: '/tags/dragons',
+            limit,
         };
     },
     computed: {
@@ -63,11 +62,37 @@ export default {
             isLoading: getterTypes.isLoading,
             error: getterTypes.error,
         }),
+        currectPage() {
+            return parseInt(this.$route.query.page || '1');
+        },
+        baseUrl() {
+            return this.$route.path;
+        },
+        offset() {
+            return this.currectPage * this.limit - this.limit;
+        },
+    },
+    watch: {
+        currectPage() {
+            this.fetchFeed();
+        },
     },
     mounted() {
-        this.$store.dispatch(actionTypes.getFeed, {
-            apiUrl: this.apiUrl,
-        });
+        this.fetchFeed();
+    },
+    methods: {
+        fetchFeed() {
+            const parsedUrl = parseUrl(this.apiUrl);
+            const stringifiedParams = stringify({
+                limit,
+                offset: this.offset,
+                ...parsedUrl.query,
+            });
+            const apiUrlWithParams = `${parsedUrl.url}?${stringifiedParams}`;
+            this.$store.dispatch(actionTypes.getFeed, {
+                apiUrl: apiUrlWithParams,
+            });
+        },
     },
 };
 </script>
