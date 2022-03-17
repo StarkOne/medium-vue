@@ -80,6 +80,9 @@ export default {
         currectPage() {
             this.fetchFeed();
         },
+        apiUrl() {
+            this.fetchFeed();
+        },
     },
     mounted() {
         this.fetchFeed();
