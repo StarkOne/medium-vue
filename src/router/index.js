@@ -5,6 +5,7 @@ import TagFeed from '@/views/TagFeed.vue';
 import Register from '@/views/Register';
 import Login from '@/views/Login';
 import CreateArticle from '@/views/CreateArticle';
+import EditArticle from '@/views/EditArticle';
 import Article from '@/views/Article';
 
 const routes = [
@@ -46,7 +47,7 @@ const routes = [
     {
         path: '/articles/:slug/edit',
         name: 'editArticle',
-        component: Login,
+        component: EditArticle,
     },
     {
         path: '/settings',

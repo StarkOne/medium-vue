@@ -42,7 +42,7 @@
 
             <hr />
 
-            <div class="article-actions">
+            <div v-if="article" class="article-actions">
                 <div class="article-meta">
                     <router-link :to="{ name: 'userProfile', params: { slug: article.author.username } }">
                         <img :src="article.author.image" alt="user_image" />
