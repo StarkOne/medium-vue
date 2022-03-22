@@ -41,7 +41,7 @@ export default {
                     articleInput,
                 })
                 .then((article) => {
-                    this.$route.push({
+                    this.$router.push({
                         name: 'article',
                         params: {
                             slug: article.slug,
