@@ -8,6 +8,7 @@ import CreateArticle from '@/views/CreateArticle';
 import EditArticle from '@/views/EditArticle';
 import Article from '@/views/Article';
 import Settings from '@/views/Settings';
+import UserProfile from '@/views/UserProfile';
 
 const routes = [
     {
@@ -58,12 +59,12 @@ const routes = [
     {
         path: '/profile/:slug',
         name: 'userProfile',
-        component: Login,
+        component: UserProfile,
     },
     {
         path: '/profile/:slug/favorites',
         name: 'userProfileFavorites',
-        component: Login,
+        component: UserProfile,
     },
 ];
 
